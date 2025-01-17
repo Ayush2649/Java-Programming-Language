@@ -26,8 +26,18 @@ public class Neighbouring_Bitwise_XOR {
         return false;
     }
 
+    public static boolean doesValidArrayExist2(int[] derived){
+        int XOR = 0;
+
+        for(int x : derived){
+            XOR ^= x;
+        }
+
+        return XOR == 0;
+    }
+
     public static void main(String[] args) {
         int[] derived = {1, 1, 0};
-        System.out.println(doesValidArrayExist(derived));
+        System.out.println(doesValidArrayExist2(derived));
     }
 }
