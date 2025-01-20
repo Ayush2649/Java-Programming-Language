@@ -77,6 +77,7 @@ public class First_Completely_Painted_Row_or_Column {
         return -1;
     }
 
+    
 
     public static void main(String[] args) {
         int[] arr = {1,3,4,2};
