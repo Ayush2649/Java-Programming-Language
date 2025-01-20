@@ -46,10 +46,41 @@ public class First_Completely_Painted_Row_or_Column {
         return -1;
     }
 
+    public static int firstCompletelyPaintedRowBetter(int[][] mat, int[] arr){
+        int m = mat.length;
+        int n = mat[0].length;
+
+        Map<Integer, int[]> map = new HashMap<>();
+
+        for(int i = 0 ; i < m; i++){
+            for(int j = 0; j < n; j++){
+                int val = mat[i][j];
+                map.put(val, new int[] {i, j});
+            }
+        }
+
+        int[] rowCountColor = new int[m];
+        int[] colCountColor = new int[n];
+
+        for(int i= 0 ; i < arr.length; i++){
+            int val = arr[i];
+            int[] coordinates = map.get(val);
+            int row = coordinates[0], col = coordinates[1];
+
+            rowCountColor[row]++;
+            colCountColor[col]++;
+
+            if(rowCountColor[row] == n || colCountColor[col] == m){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     public static void main(String[] args) {
         int[] arr = {1,3,4,2};
         int[][] mat = {{1,4}, {2,3}};
-        System.out.println(firstCompletelyPaintedRow(mat, arr));
+        System.out.println(firstCompletelyPaintedRowBetter(mat, arr));
     }
 }
