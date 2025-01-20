@@ -1,5 +1,5 @@
 public class Merge_Two_Sorted_Lists {
-    static class Node{
+    public static class Node{
         int data;
         Node next;
 
