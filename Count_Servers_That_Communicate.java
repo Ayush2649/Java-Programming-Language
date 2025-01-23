@@ -32,8 +32,35 @@ public class Count_Servers_That_Communicate {
         return count;
     }
 
+    public static int countServersOptimized(int[][] grid){
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int[] indexRowCount = new int[m];
+        int[] indexColCount = new int[n];
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 1){
+                    indexColCount[j]++;
+                    indexRowCount[i]++;
+                }
+            }
+        }
+
+        int result = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 1 && (indexColCount[j] > 1 || indexRowCount[i] > 1)){
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         int[][] grid = {{1,0},{1,1}};
-        System.out.println(countServersBruteForce(grid));
+        System.out.println(countServersOptimized(grid));
     }
 }
