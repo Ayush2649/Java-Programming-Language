@@ -12,7 +12,7 @@ public class Arrays{
         } 
         System.out.println("The smallest number is " + smallest);
         return largest;
-    }
+    
 
     public static int binarySearch(int numbers[], int key){
         int start = 0; 
