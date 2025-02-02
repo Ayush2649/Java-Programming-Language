@@ -1,20 +1,16 @@
 class Solution {
     public boolean check(int[] nums) {
         int n = nums.length;
+        int inversionCount = 0;
 
-        int[] sortedNums = nums.clone();
-        Arrays.sort(sortedNums);
-
-        for(int rotatedOffset = 0; rotatedOffset < n; rotatedOffset++){
-            boolean isMatch = true;
-            for(int i = 0; i < n; i++){
-                if(nums[(rotatedOffset + i) % n] != sortedNums[i]){
-                    isMatch = false;
-                    break;
-                }
+        for(int i = 1 ; i < n; i++){
+            if(nums[i] < nums[i - 1]){
+                inversionCount++;
             }
-            if(isMatch) return true;
         }
-        return false;
+
+        if(nums[0] < nums[n - 1]) inversionCount++;
+
+        return inversionCount <= 1;
     }
 }
