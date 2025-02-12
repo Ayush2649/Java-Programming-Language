@@ -1,7 +1,9 @@
 class Solution {
-    public int calculateDigitSum(int num){
+
+    // Helper function to compute the sum of digits of a number
+    private int calculateDigitSum(int num) {
         int digitSum = 0;
-        while(num > 0){
+        while (num > 0) {
             digitSum += num % 10;
             num /= 10;
         }
@@ -9,28 +11,31 @@ class Solution {
     }
 
     public int maximumSum(int[] nums) {
-        Pair<Integer, Integer>[] digitSumPairs = new Pair[nums.length];
-
-        for(int i = 0; i < nums.length; i++){
-            int digitSum = calculateDigitSum(nums[i]);
-            digitSumPairs[i] = new Pair<>(digitSum, nums[i]);
+        // Array to store a min heap for each possible digit sum (0 to 81)
+        PriorityQueue<Integer>[] digitSumGroups = new PriorityQueue[82];
+        for (int i = 0; i < 82; i++) {
+            digitSumGroups[i] = new PriorityQueue<Integer>();
         }
-
-        Arrays.sort(digitSumPairs,
-                    Comparator.comparing(Pair<Integer, Integer>::getKey).thenComparing
-                    (Pair<Integer, Integer>::getValue));
 
         int maxPairSum = -1;
 
-        for(int index = 1; index < digitSumPairs.length; index++){
-            int currentDigitSum = digitSumPairs[index].getKey();
-            int previousDigitSum = digitSumPairs[index - 1].getKey();
+        // Group numbers by their digit sums, maintaining heap size of 2
+        for (int number : nums) {
+            int digitSum = calculateDigitSum(number);
+            digitSumGroups[digitSum].add(number);
 
-            if(currentDigitSum == previousDigitSum){
-                int currentSum = digitSumPairs[index].getValue() +
-                                 digitSumPairs[index - 1].getValue();
+            // Keep only the top 2 largest numbers in the heap
+            if (digitSumGroups[digitSum].size() > 2) {
+                digitSumGroups[digitSum].poll(); // Remove the smallest element
+            }
+        }
 
-                maxPairSum = Math.max(maxPairSum, currentSum);
+        // Traverse the vector to find the maximum pair sum for each group
+        for (PriorityQueue<Integer> minHeap : digitSumGroups) {
+            if (minHeap.size() == 2) {
+                int first = minHeap.poll();
+                int second = minHeap.poll();
+                maxPairSum = Math.max(maxPairSum, first + second);
             }
         }
 
