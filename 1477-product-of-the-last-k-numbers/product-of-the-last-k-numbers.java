@@ -9,20 +9,30 @@ class ProductOfNumbers {
     }
     
     public void add(int num) {
-        nums.add(num);
+        if(num == 0){
+            nums.clear();
+            n = 0;
+        } else {
+            if(nums.isEmpty()){
+                nums.add(num);
+            } else {
+                nums.add(nums.get(n - 1) * num);
+            }
+            n++;
+        }
     }
     
     public int getProduct(int k) {
-        int product = 1;
-        n = nums.size();
-
-        for(int i = n - k; i < n; i++){
-            product *= nums.get(i);
+        if(k > n){
+            return 0;
+        } else if(k == n){
+            return nums.get(n - 1);
         }
-
-        return product;
+        
+        return nums.get(n - 1) / nums.get(n - k - 1);
     }
 }
+
 
 /**
  * Your ProductOfNumbers object will be instantiated and called as such:
