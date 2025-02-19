@@ -8,10 +8,13 @@ class Solution {
         for(char ch = 'a'; ch <= 'c'; ch++){
             if(curr.length() > 0 && curr.charAt(curr.length() - 1) == ch) continue;
 
+            // Do
             curr.append(ch);
 
+            // Explore
             solve(n, curr, result);
 
+            // Undo
             curr.deleteCharAt(curr.length() - 1);
         }
     }
