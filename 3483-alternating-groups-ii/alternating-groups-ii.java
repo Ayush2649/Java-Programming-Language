@@ -1,32 +1,32 @@
 class Solution {
     public int numberOfAlternatingGroups(int[] colors, int k) {
         int n = colors.length;
+        int N = n + (k - 1);
 
-        if(k == 1) return n;
-
-        int[] diff = new int[n];
-        for(int i = 0; i < n; i++) {
-            diff[i] = (colors[i] != colors[(i + 1) % n]) ? 1 : 0;
-        }
-
-        int extended[] = new int[n + k - 1];
-        for(int i = 0; i < extended.length; i++){
-            extended[i] = diff[i % n];
-        }
-
-        int windowSum = 0;
+        int[] extended = new int[N];
+        System.arraycopy(colors, 0, extended, 0 , n);
         for(int i = 0; i < k - 1; i++) {
-            windowSum += extended[i];
+            extended[n + i] = colors[i];
         }
 
-        int count = 0;
-        if(windowSum == k - 1) count++;
+        int result = 0;
+        int i = 0, j = 1;
 
-        for(int i = 1; i < n; i++) {
-            windowSum = windowSum - extended[i - 1] + extended[i + k - 2];
-            if(windowSum == k - 1) count++;
+        while(j < N) {
+            if(extended[j] == extended[j - 1]) {
+                i = j;
+                j++;
+                continue;
+            }
+
+            if(j - i + 1 == k) {
+                result++;
+                i++;
+            }
+
+            j++;
         }
-        
-        return count;
+
+        return result;
     }
 }
