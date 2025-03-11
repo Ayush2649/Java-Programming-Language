@@ -5,7 +5,7 @@ class Solution {
         int result = 0;
 
         int i = 0, j = 0;
-        while(j < n) {
+        while(j < n){
             char ch = s.charAt(j);
             map[ch - 'a']++;
 
