@@ -1,23 +1,19 @@
 class Solution {
     public int minOperations(int[] nums) {
-        int n = nums.length;
-        int k = 3;
-
-        int flips = 0;
-        int flipCountFromPastForCurri = 0;
-
-        for(int i = 0; i < n; i++){
-            if(i >= k && nums[i - k] == 5){
-                flipCountFromPastForCurri--;
-            }
-
-            if(flipCountFromPastForCurri % 2 == nums[i]){
-                if(i + k > n) return -1;
-                flipCountFromPastForCurri++;
-                flips++;
-                nums[i] = 5;
+        int count = 0;
+        for(int i = 0; i < nums.length - 2; i++){
+            if(nums[i] == 0){
+                nums[i] = 1 - nums[i];
+                nums[i + 1] = 1 - nums[i + 1];
+                nums[i + 2] = 1 - nums[i + 2];
+                count += 1;
             }
         }
-        return flips;
+
+        if(nums[nums.length - 1] == 0 || nums[nums.length - 2] == 0){
+            return -1;
+        }
+
+        return count;
     }
 }
