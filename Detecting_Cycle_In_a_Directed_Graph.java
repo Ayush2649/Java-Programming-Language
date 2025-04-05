@@ -61,3 +61,4 @@ public class Detecting_Cycle_In_a_Directed_Graph {
         System.out.println("Graph 2 has cycle: " + isCyclic(graph2)); // Expected output: false
     }
 }
+// 
