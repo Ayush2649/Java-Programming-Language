@@ -1,30 +1,36 @@
 import java.util.*;
 import java.util.Arrays;
 public class BFS {
-    public static ArrayList<Integer> bfsOnGraph(ArrayList<ArrayList<Integer>> adj){
-        ArrayList<Integer> result = new ArrayList<>();
-        boolean[] visited = new boolean[adj.size()];
-        Queue<Integer> queue = new LinkedList<>();
+    public static void BFSearch(ArrayList<ArrayList<Integer>> adj, boolean[] visited, ArrayList<Integer> answer, int curr){
+        Queue<Integer> q = new LinkedList<>();
 
-        visited[0] = true;
-        queue.offer(0);
+        q.add(curr);
+        visited[curr] = true;
 
-        while(!queue.isEmpty()){
-            int vertex = queue.poll();
-            result.add(vertex);
+        while(!q.isEmpty()){
+            int u = q.poll();
+            answer.add(u);
 
-            for(int neighbour : adj.get(vertex)){
-                // if(!visited[neighbour]) {
-                    visited[neighbour] = true;
-                    queue.offer(neighbour);
-                // }
+            for(int nbr : adj.get(u)){
+                if(!visited[nbr]){
+                    q.add(nbr);
+                    visited[nbr] = true;
+                }
             }
         }
-        return result;
     }
 
+    public static ArrayList<Integer> bfsOnGraph(int V, ArrayList<ArrayList<Integer>> adj){
+        boolean[] visited = new boolean[V];
+        ArrayList<Integer> answer = new ArrayList<>();
+
+        BFSearch(adj, visited, answer, 0);
+
+        return answer;
+    }
     public static void main(String[] args) {
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        int V = 5;
         
         // Add edges to the graph (0-based indexing)
         adj.add(new ArrayList<>(Arrays.asList(1, 2))); // Neighbors of vertex 0
@@ -34,7 +40,7 @@ public class BFS {
         adj.add(new ArrayList<>());                    // Neighbors of vertex 4
 
         // Get the BFS traversal
-        ArrayList<Integer> bfsTraversal = bfsOnGraph(adj);
+        ArrayList<Integer> bfsTraversal = bfsOnGraph(V, adj);
         
         // Print the BFS traversal
         System.out.println("BFS Traversal of the graph: " + bfsTraversal);
