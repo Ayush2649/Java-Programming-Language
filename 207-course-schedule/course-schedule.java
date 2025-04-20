@@ -12,7 +12,7 @@ class Solution {
         while(!q.isEmpty()){
             int u = q.poll();
             count++;
-            
+
             for(int v : adj.get(u)){
                 indegree[v]--;
 
@@ -22,9 +22,7 @@ class Solution {
             }
         }
 
-        if(count == n) return true;
-
-        return false;
+        return count == n;
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
