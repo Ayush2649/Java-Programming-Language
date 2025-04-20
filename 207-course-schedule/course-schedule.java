@@ -6,7 +6,7 @@ class Solution {
         for(int v : adj.get(u)){
             if(!visited[v] && isCycleDFS(adj, v, visited, recStack)){
                 return true;
-            } else if (recStack[v] == true){
+            } else if(recStack[v] == true){
                 return true;
             }
         }
