@@ -1,9 +1,9 @@
 class Solution {
-    public boolean topoSort(ArrayList<ArrayList<Integer>> adj, int[] indegree, int n){
+    public boolean CDBFS(ArrayList<ArrayList<Integer>> adj, int[] indegree, int numCourses){
         Queue<Integer> q = new LinkedList<>();
         int count = 0;
 
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < numCourses; i++){
             if(indegree[i] == 0){
                 q.offer(i);
             }
@@ -22,7 +22,7 @@ class Solution {
             }
         }
 
-        return count == n;
+        return count == numCourses;
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -43,6 +43,6 @@ class Solution {
             indegree[u]++;
         }
 
-        return topoSort(adj, indegree, numCourses);
+        return CDBFS(adj, indegree, numCourses);
     }
 }
