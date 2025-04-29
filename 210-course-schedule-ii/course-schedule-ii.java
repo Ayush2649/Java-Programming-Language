@@ -1,38 +1,29 @@
 class Solution {
-    public int[] topologicalSort(ArrayList<ArrayList<Integer>> adj, int[] indegree, int n){
-        Queue<Integer> queue = new LinkedList<>();
+    boolean hasCycle;
+    public void dfs(ArrayList<ArrayList<Integer>> adj, boolean[] visited, int curr, Stack<Integer> stack, boolean[] inRecursion){
+        visited[curr] = true;
+        inRecursion[curr] = true;
 
-        int[] result = new int[n];
-        int count = 0;
+        for(int v : adj.get(curr)){
+            if(inRecursion[v] == true){
+                hasCycle = true;
+                return;
+            }
 
-        for(int i = 0; i < n; i++){
-            if(indegree[i] == 0){
-                queue.offer(i);
+            if(!visited[v]){
+                dfs(adj, visited, v, stack, inRecursion);
             }
         }
 
-        while(!queue.isEmpty()){
-            int u = queue.poll();
-            result[count++] = u;
-
-            for(int v : adj.get(u)){
-                indegree[v]--;
-
-                if(indegree[v] == 0){
-                    queue.offer(v);
-                }
-            }
-        }
-
-        if(count == n){
-            return result;
-        }
-
-        return new int[] {};
+        stack.push(curr);
+        inRecursion[curr] = false;
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] indegree = new int[numCourses];
+        boolean[] visited = new boolean[numCourses];
+        boolean[] inRecursion = new boolean[numCourses];
+        Stack<Integer> stack = new Stack<>();
+        hasCycle = false;
 
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
 
@@ -45,10 +36,25 @@ class Solution {
             int v = pre[1];
 
             adj.get(v).add(u);
-
-            indegree[u]++;
         }
 
-        return topologicalSort(adj, indegree, numCourses);
+        for(int i = 0; i < numCourses; i++){
+            if(!visited[i]){
+                dfs(adj, visited, i, stack, inRecursion);
+            }
+        }
+
+        if(hasCycle == true){
+            return new int[] {};
+        }
+
+        int[] result = new int[numCourses];
+        int index = 0;
+
+        while(!stack.isEmpty()){
+            result[index++] = stack.pop();
+        }
+
+        return result;
     }
 }
