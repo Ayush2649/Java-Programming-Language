@@ -1,29 +1,36 @@
 class Solution {
-    boolean hasCycle;
-    public void dfs(ArrayList<ArrayList<Integer>> adj, boolean[] visited, int curr, Stack<Integer> stack, boolean[] inRecursion){
-        visited[curr] = true;
-        inRecursion[curr] = true;
+    public int[] kahns(ArrayList<ArrayList<Integer>> adj, int[] indegree, int n){
+        Queue<Integer> q = new LinkedList<>();
 
-        for(int v : adj.get(curr)){
-            if(inRecursion[v] == true){
-                hasCycle = true;
-                return;
-            }
+        int[] result = new int[n];
+        int count = 0;
 
-            if(!visited[v]){
-                dfs(adj, visited, v, stack, inRecursion);
+        for(int i = 0; i < n; i++){
+            if(indegree[i] == 0){
+                q.offer(i);
             }
         }
 
-        stack.push(curr);
-        inRecursion[curr] = false;
+        while(!q.isEmpty()){
+            int u = q.poll();
+            result[count++] = u;
+
+            for(int v : adj.get(u)){
+                indegree[v]--;
+
+                if(indegree[v] == 0){
+                    q.offer(v);
+                }
+            }
+        }
+
+        if(count == n) return result;
+
+        return new int[] {};
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        boolean[] visited = new boolean[numCourses];
-        boolean[] inRecursion = new boolean[numCourses];
-        Stack<Integer> stack = new Stack<>();
-        hasCycle = false;
+        int[] indegree = new int[numCourses];
 
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
 
@@ -36,25 +43,10 @@ class Solution {
             int v = pre[1];
 
             adj.get(v).add(u);
+
+            indegree[u]++;
         }
 
-        for(int i = 0; i < numCourses; i++){
-            if(!visited[i]){
-                dfs(adj, visited, i, stack, inRecursion);
-            }
-        }
-
-        if(hasCycle == true){
-            return new int[] {};
-        }
-
-        int[] result = new int[numCourses];
-        int index = 0;
-
-        while(!stack.isEmpty()){
-            result[index++] = stack.pop();
-        }
-
-        return result;
+        return kahns(adj, indegree, numCourses);
     }
 }
