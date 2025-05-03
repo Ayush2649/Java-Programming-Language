@@ -1,7 +1,6 @@
 class Solution {
     public int minDominoRotations(int[] tops, int[] bottoms) {
-        int result = Math.min(check(tops[0], tops, bottoms),
-                              check(bottoms[0], tops, bottoms));
+        int result = Math.min(check(tops[0], tops, bottoms), check(bottoms[0], tops, bottoms));
         
         return result == Integer.MAX_VALUE ? -1 : result;
     }
