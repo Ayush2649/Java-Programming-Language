@@ -16,12 +16,12 @@ class Solution {
             }
         }
 
-        int totalCandies = 0;
+        int res = 0;
 
         for(int candy : candies){
-            totalCandies += candy;
+            res += candy;
         }
 
-        return totalCandies;
+        return res;
     }
 }
