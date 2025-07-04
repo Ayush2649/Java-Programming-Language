@@ -14,20 +14,20 @@
  * }
  */
 class Solution {
-    static int maxDia;
-
-    public int levels(TreeNode root){
+    public int diameterOfBinaryTreeRec(TreeNode root, int[] res){
         if(root == null) return 0;
-        int leftLevel = levels(root.left);
-        int rightLevel = levels(root.right);
-        int dia = Math.abs(leftLevel + rightLevel);
-        maxDia = Math.max(dia, maxDia);
-        return 1 + Math.max(rightLevel, leftLevel);
+
+        int lDiam = diameterOfBinaryTreeRec(root.left, res);
+        int rDiam = diameterOfBinaryTreeRec(root.right, res);
+
+        res[0] = Math.max(res[0], lDiam + rDiam);
+
+        return 1 + Math.max(lDiam, rDiam);
     }
 
     public int diameterOfBinaryTree(TreeNode root) {
-        maxDia = 0;
-        levels(root);
-        return maxDia;
+        int[] res = new int[1];
+        diameterOfBinaryTreeRec(root, res);
+        return res[0];
     }
 }
