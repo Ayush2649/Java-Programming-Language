@@ -2,6 +2,7 @@ public class Sum_Of_SubArray_Ranges { // O(n^2)
     public static long Sum(int[] nums){
         int n = nums.length;
         long res = 0;
+        
 
         for(int i = 0; i < n ; i++){
             int minVal = nums[i];
