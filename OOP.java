@@ -17,10 +17,10 @@ class Student{ // Class is a blueprint or a user-defined data type
     //     this.age = age;
     // } // Parametrized Constructor
 
-    // Student(Student s2){
-    //     this.name = s2.name;
-    //     this.age = s2.age;
-    // } // Copy Constructor
+    Student(Student s2){
+        this.name = s2.name;
+        this.age = s2.age;
+    } // Copy Constructor
 
     Student(){}
 }
@@ -31,6 +31,8 @@ public class OOP {
         s1.name = "Ayush";
         s1.age = 20;
 
-        s1.printInfo();
+        Student s2 = new Student(s1);
+
+        s2.printInfo();
     }
 }
