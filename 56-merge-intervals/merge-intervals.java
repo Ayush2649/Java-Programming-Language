@@ -12,7 +12,7 @@ class Solution {
             if(curr_start > ans.get(ans.size() - 1)[1]){
                 ans.add(intervals[i]);
             } else {
-                ans.get(ans.size() - 1)[1] = Math.max(ans.get(ans.size() - 1)[1], curr_end);
+                ans.get(ans.size() - 1)[1] = Math.max(curr_end, ans.get(ans.size() - 1)[1]);
             }
         }
 
