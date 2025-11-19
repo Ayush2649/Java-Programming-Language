@@ -1,18 +1,13 @@
 class Solution {
     public boolean checkIfExist(int[] arr) {
-        int n = arr.length;
-        HashSet<Integer> set = new HashSet<>();
-        int zeroCount = 0;
+        Arrays.sort(arr);
 
-        for(int num : arr){
-            if(num == 0) zeroCount++;
-            set.add(num);
-        }
+        for(int i = 0; i < arr.length; i++){
+            int target = 2 * arr[i];
 
-        if(zeroCount >= 2) return true;
+            int idx = Arrays.binarySearch(arr, target);
 
-        for(int num : arr){
-            if(num != 0 && set.contains(num * 2)) return true;
+            if(idx >= 0 && idx != i) return true;
         }
 
         return false;
