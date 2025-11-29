@@ -7,12 +7,6 @@ class Solution {
             sum += nums[i];
         }
 
-        int count = 0;
-        while(sum % k != 0){
-            sum -= 1;
-            count++;
-        }
-
-        return count;
+        return sum % k;
     }
 }
