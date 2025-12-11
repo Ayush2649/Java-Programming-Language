@@ -1,16 +1,15 @@
 class Solution {
     public int fib(int n) {
-        if(n == 0) return 0;
-        if(n == 1) return 1;
+        if(n <= 1) return n;
 
-        int prev2 = 0, prev1 = 1, curr = 0;
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
 
         for(int i = 2; i <= n; i++){
-            curr = (prev1 + prev2) % 100000007;
-            prev2 = prev1;
-            prev1 = curr;
+            dp[i] = dp[i - 1] + dp[i - 2];
         }
 
-        return curr;
+        return dp[n];
     }
 }
