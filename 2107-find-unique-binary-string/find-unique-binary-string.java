@@ -1,24 +1,30 @@
 class Solution {
-    public String findDifferentBinaryString(String[] nums) {
-        HashSet<Integer> set = new HashSet<>();
-        
-        for(String num : nums){
-            set.add(Integer.parseInt(num, 2));
-        }
-
-        int n = nums.length;
-
-        String result = "";
-
-        for(int number = 0; number <= 65536; number++){
-            if(!set.contains(number)){
-                result = Integer.toBinaryString(number);
-                while(result.length() < n){
-                    result = '0' + result;
-                }
-                return result;
+    int n;
+    Set<String> numsSet = new HashSet();
+    
+    private String generate(String curr) {
+        if (curr.length() == n) {
+            if (!numsSet.contains(curr)) {
+                return curr;
             }
+            
+            return "";
         }
-        return "";
+        
+        String addZero = generate(curr + "0");
+        if (addZero.length() > 0) {
+            return addZero;
+        }
+        
+        return generate(curr + "1");
+    }
+    
+    public String findDifferentBinaryString(String[] nums) {
+        n = nums.length;
+        for (String s : nums) {
+            numsSet.add(s);
+        }
+        
+        return generate("");
     }
 }
